@@ -246,7 +246,10 @@ function distConfig(grunt, pkg) {
                 paths: ["."],
                 alias: '<%= pkg.spm.alias %>',
                 idleading: "<%=pkg.family%>/<%=pkg.name%>/<%=pkg.version%>/",
-                debug: true
+                debug: true,
+                handlebars: {
+                    id: 'handlebars'
+                }
             },
             js: {
                 files: [{
