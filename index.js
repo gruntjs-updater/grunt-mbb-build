@@ -9,6 +9,7 @@
 'use strict';
 
 var path = require('path');
+var crypto = require('crypto');
 
 function initConfig(grunt) {
 
@@ -16,10 +17,15 @@ function initConfig(grunt) {
 
     var config = distConfig(grunt, pkg);
 
+    var replaceTask = grunt.util._.map(grunt.util._.keys(config.replace), function (task) {
+        return "replace:" + task;
+    });
 
     grunt.util._.merge(config, grunt.config.data);
     grunt.config.data = config;
     grunt.config.data.pkg = pkg;
+
+    grunt.registerTask('replace-css', replaceTask);
 
     grunt.registerTask('newline', function () {
         grunt.file.recurse('dist', function (f) {
@@ -32,37 +38,37 @@ function initConfig(grunt) {
             }
         });
     });
+
+
 }
 
 
-function initReplace(grunt, pkg) {
+function initCSSPicReplace(grunt, pkg) {
     var replace = {};
     grunt.file.recurse('src', function (abspath, rootdir, subdir, filename) {
         var extname = path.extname(abspath);
         if (extname === '.css') {
             var text = grunt.file.read(abspath);
-            if (/url\(['"]?[^)'"]+['"]?\)/g.test(text)) {
+            var matchs = text.match(/url\(['"]?[^)'"]+['"]?\)/ig);
+            if (matchs) {
                 var r = replace[abspath] = {
                     src: [".build/" + abspath, ".build/" + abspath.replace(".css", "-debug.css")],
                     overwrite: true,
                     replacements: []
                 };
                 var replacements = r.replacements;
-                var matchs = text.match(/url\(['"]?[^)'"]+['"]?\)/ig);
-                if (matchs) {
-                    matchs.forEach(function (url) {
-                        if (!/^url\(['"]?http:\/\//i.test(url)) {
-                            replacements.push({
-                                from: url,
-                                to: url.replace(/^url\(['"]?([^)'"]+)['"]?\)$/, function ($0, $1) {
-                                    return 'url("http://cca.mbaobao.com/static/mod/<%=pkg.family%>/<%=pkg.name%>/<%=pkg.version%>/' + path.join(subdir ? subdir : '', $1).replace("\\", "/") + '")';
-                                })
-                            });
-                        }
-                    });
+                matchs.forEach(function (url) {
+                    if (!/^url\(['"]?http:\/\//i.test(url)) {
+                        var picMD5 = crypto.createHash('md5').update(text).digest('hex').substr(-6);
+                        replacements.push({
+                            from: url,
+                            to: url.replace(/^url\(['"]?([^)'"]+)['"]?\)$/, function ($0, $1) {
+                                return 'url("http://cca.mbaobao.com/static/mod/<%=pkg.family%>/<%=pkg.name%>/<%=pkg.version%>/' + path.join(subdir ? subdir : '', $1).replace("\\", "/") + '?'+ picMD5 +'")';
+                            })
+                        });
+                    }
+                });
 
-
-                }
             }
         }
     });
@@ -91,7 +97,8 @@ function distConfig(grunt, pkg) {
     var jsmins = [];
     var cssmins = [];
     var copies = [];
-    var replaces = initReplace(grunt, pkg);
+
+    var replaceCSSPic = initCSSPicReplace(grunt, pkg);
 
     if (Array.isArray(output)) {
         var ret = {};
@@ -231,7 +238,7 @@ function distConfig(grunt, pkg) {
                 files: jsmins
             }
         },
-        replace: replaces,
+        replace: replaceCSSPic,
         copy: {
             spm: {
                 files: copies
@@ -298,7 +305,7 @@ exports.init = function (grunt) {
         "clean:dist", // delete dist direcotry
 
         "transport:js", // src/* -> .build/src/* 
-        "replace", // relative path  -> absolute path
+        "replace-css", // relative path  -> absolute path
         "concat:css", //.build/src/*.css -> .build/dist/*.css
 
         "transport:css", // .build/dist/*.css -> .build/src/*.css 
