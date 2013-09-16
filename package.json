@@ -1,7 +1,7 @@
 {
   "name": "grunt-mbb-build",
   "description": "mbb F2E build tool",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://github.com/hellolibo/grunt-mbb-build",
   "author": {
     "name": "hellolibo",
@@ -50,7 +50,7 @@
     "gruntplugin",
     "gruntcollection"
   ],
-  "readme":"# grunt-mbb-build\r\n\r\n麦包包内部静态文件打包工具，修改于已经消失了的grunt-spm-build。\r\n\r\n## 增加功能\r\n\r\n  样式表图片相对路径转绝对路径\r\n  样式表图片路径md5字符戳\r\n  编译目录中的.handlebars文件\r\n\r\n## 命令\r\n  grunt build\r\n  grunt hbs\r\n",
+  "readme":"# grunt-mbb-build\r\n\r\n麦包包内部静态文件打包工具，修改于已经消失了的grunt-spm-build。\r\n\r\n## 增加功能\r\n\r\n  样式表图片相对路径转绝对路径\r\n    样式表图片路径md5字符戳\r\n    编译目录中的.handlebars文件\r\n\r\n## 命令\r\n    grunt build\r\n    grunt hbs\r\n",
   "readmeFilename": "README.md",
   "_id": "grunt-mbb-build@0.1.5",
   "_from": "grunt-mbb-build@~0.1.4"

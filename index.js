@@ -231,6 +231,7 @@ function distConfig(grunt, pkg) {
         uglify: {
             js: {
                 options: {
+                    banner: '/*! <%= pkg.name %> <%= pkg.version %> pub <%= grunt.template.today("yyyy-mm-dd HH:MM")%> by <%= pkg.author.name %> */\n',
                     beautify: {
                         ascii_only: true
                     }
