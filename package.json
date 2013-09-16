@@ -1,7 +1,7 @@
 {
   "name": "grunt-mbb-build",
   "description": "mbb F2E build tool",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "homepage": "https://github.com/hellolibo/grunt-mbb-build",
   "author": {
     "name": "hellolibo",
@@ -40,8 +40,7 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-contrib-clean": "~0.4.1",
-    "grunt-text-replace": "0.3.7",
-    "crypto":"0.0.3"
+    "grunt-text-replace": "0.3.7"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
