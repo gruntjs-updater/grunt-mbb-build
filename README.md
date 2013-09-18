@@ -10,6 +10,6 @@
 
 ## 命令
 
-    grunt build
+    grunt mbb-build
     grunt hbs
 
