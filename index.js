@@ -302,7 +302,7 @@ exports.init = function (grunt) {
 
     initConfig(grunt);
 
-    grunt.registerTask("build", [
+    grunt.registerTask("mbb-build", [
         "clean:dist", // delete dist direcotry
 
         "transport:js", // src/* -> .build/src/* 
