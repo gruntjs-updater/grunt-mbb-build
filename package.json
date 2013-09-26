@@ -1,7 +1,7 @@
 {
   "name": "grunt-mbb-build",
   "description": "mbb F2E build tool",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://github.com/hellolibo/grunt-mbb-build",
   "author": {
     "name": "hellolibo",

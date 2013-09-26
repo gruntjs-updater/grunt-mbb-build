@@ -58,7 +58,7 @@ function initCSSPicReplace(grunt, pkg) {
                 };
                 var replacements = r.replacements;
                 matchs.forEach(function (url) {
-                    if (!/^url\(['"]?http:\/\//i.test(url)) {
+                    if (!/^url\(['"]?(http|https|data):/i.test(url)) {
                         var picMD5 = crypto.createHash('md5').update(text).digest('hex').substr(-6);
                         replacements.push({
                             from: url,
